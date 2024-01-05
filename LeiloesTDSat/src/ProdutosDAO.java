@@ -59,12 +59,52 @@ public class ProdutosDAO {
             }
         }
     }
-
-    
-    public ArrayList<ProdutosDTO> listarProdutos(){
-        
-        return listagem;
+public void closeConnections() {
+        try {
+            if (resultset != null) {
+                resultset.close();
+            }
+            if (prep != null) {
+                prep.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+    
+   public ArrayList<ProdutosDTO> listarProdutos() {
+    try {
+        conn = new conectaDAO().connectDB(); // Certifique-se de ajustar conforme necessário
+
+        String query = "SELECT * FROM produtos";
+        prep = conn.prepareStatement(query);
+        resultset = prep.executeQuery();
+
+        listagem.clear();
+
+        while (resultset.next()) {
+            ProdutosDTO produto = new ProdutosDTO();
+            produto.setId(resultset.getInt("id"));
+            produto.setNome(resultset.getString("nome"));
+            produto.setValor(resultset.getInt("valor"));
+            produto.setStatus(resultset.getString("status"));
+            listagem.add(produto);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace(); // Aqui, você pode querer lidar com a exceção de maneira mais apropriada.
+    } finally {
+        // Certifique-se de fechar as conexões no bloco finally
+        // Isso garante que a conexão seja fechada, independentemente de ocorrer uma exceção ou não
+        closeConnections();
+    }
+
+    return listagem;
+}
+
     
     
     
