@@ -165,7 +165,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
     java.awt.EventQueue.invokeLater(() -> {
         new cadastroVIEW().setVisible(true);
     });
-}       
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
