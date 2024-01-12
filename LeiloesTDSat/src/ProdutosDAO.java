@@ -101,8 +101,26 @@ public void closeConnections() {
         // Isso garante que a conexão seja fechada, independentemente de ocorrer uma exceção ou não
         closeConnections();
     }
+    
 
     return listagem;
+}
+   public void venderProduto(int id) {
+    String sql = "UPDATE produtos SET status=? WHERE id =?";
+
+    try {
+        conn = new conectaDAO().connectDB(); // Obtenha a conexão antes de executar a atualização
+        PreparedStatement prep = conn.prepareStatement(sql);
+        prep.setString(1, "VENDIDO");
+        prep.setInt(2, id);
+        prep.executeUpdate();
+        JOptionPane.showMessageDialog(null, "Produto Atualizado com sucesso");
+    } catch (SQLException ex) {
+        System.out.println("Não foi possível atualizar produto" + ex.getMessage());
+    } finally {
+        // Certifique-se de fechar a conexão no bloco finally
+        closeConnections();
+    }
 }
 
     
