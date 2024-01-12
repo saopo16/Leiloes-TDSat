@@ -77,7 +77,7 @@ public void closeConnections() {
     
    public ArrayList<ProdutosDTO> listarProdutos() {
     try {
-        conn = new conectaDAO().connectDB(); // Certifique-se de ajustar conforme necessário
+        conn = new conectaDAO().connectDB(); 
 
         String query = "SELECT * FROM produtos";
         prep = conn.prepareStatement(query);
@@ -95,23 +95,23 @@ public void closeConnections() {
         }
 
     } catch (SQLException e) {
-        e.printStackTrace(); // Aqui, você pode querer lidar com a exceção de maneira mais apropriada.
+        e.printStackTrace(); 
     } finally {
-        // Certifique-se de fechar as conexões no bloco finally
-        // Isso garante que a conexão seja fechada, independentemente de ocorrer uma exceção ou não
+        
         closeConnections();
     }
     
 
     return listagem;
 }
+   
    public void venderProduto(int id) {
     String sql = "UPDATE produtos SET status=? WHERE id =?";
 
     try {
         conn = new conectaDAO().connectDB(); // Obtenha a conexão antes de executar a atualização
         PreparedStatement prep = conn.prepareStatement(sql);
-        prep.setString(1, "VENDIDO");
+        prep.setString(1, "Vendido");
         prep.setInt(2, id);
         prep.executeUpdate();
         JOptionPane.showMessageDialog(null, "Produto Atualizado com sucesso");
