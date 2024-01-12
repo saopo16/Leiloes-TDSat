@@ -1,3 +1,7 @@
+
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -14,8 +18,8 @@ public class vendasVIEW extends javax.swing.JFrame {
      */
     public vendasVIEW() {
         initComponents();
+        listarProdutosVendidos();  
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -108,6 +112,28 @@ public class vendasVIEW extends javax.swing.JFrame {
             }
         });
     }
+    private void listarProdutosVendidos() {
+    try {
+        ProdutosDAO produtosdao = new ProdutosDAO();
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        ArrayList<ProdutosDTO> listagemVendidos = produtosdao.listarProdutosVendidos();
+
+        for (int i = 0; i < listagemVendidos.size(); i++) {
+            model.addRow(new Object[]{
+                listagemVendidos.get(i).getId(),
+                listagemVendidos.get(i).getNome(),
+                listagemVendidos.get(i).getValor(),
+                listagemVendidos.get(i).getStatus()
+            });
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
